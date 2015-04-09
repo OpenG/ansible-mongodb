@@ -1,0 +1,7 @@
+---
+- name: add mongodb repository
+  copy: src=mongodb-org-3.0.repo dest=/etc/yum.repos.d/mongodb-org-3.0.repo
+  tags: [repository]
+
+- name: install mongodb
+  yum: name=mongodb-org state=present

@@ -1,0 +1,10 @@
+---
+- name: install selinux python bindings
+  yum: name=libselinux-python state=present
+  tags: [utils, selinux]
+
+- include: install.yml
+  tags: [database, mongodb, install, mongodb-install]
+
+- include: configure.yml
+  tags: [database, mongodb, configuration, mongodb-configuration]

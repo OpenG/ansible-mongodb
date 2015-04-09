@@ -1,0 +1,8 @@
+---
+- name: adjust mongod configuration settings
+  template: src=mongod.conf.j2 dest=/etc/mongod.conf
+  notify:
+    - reload mongodb
+
+- name: setup mongod as startup service
+  service: name=mongod state=started enabled=yes
