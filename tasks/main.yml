@@ -1,4 +1,9 @@
 ---
+- name: add repository
+  template: src=mongodb-org.repo.j2 dest=/etc/yum.repos.d/mongodb-org.repo
+  tags:
+    - mongodb
+
 - include: install.yml
   tags: [database, mongodb, install, mongodb-install]
 
