@@ -1,3 +1,0 @@
----
-- name: install mongodb
-  yum: name=mongodb-org state=present

@@ -4,8 +4,19 @@
   tags:
     - mongodb
 
-- include: install.yml
-  tags: [database, mongodb, install, mongodb-install]
+- name: install package
+  yum: name=mongodb-org state=present
+  tags:
+    - mongodb
 
-- include: configure.yml
-  tags: [database, mongodb, configuration, mongodb-configuration]
+- name: adjust mongod configuration
+  template: src=mongod.conf.j2 dest=/etc/mongod.conf
+  notify:
+    - reload mongodb
+  tags:
+    - mongodb
+
+- name: setup as startup service
+  service: name=mongod state=started enabled=yes
+  tags:
+    - mongodb
