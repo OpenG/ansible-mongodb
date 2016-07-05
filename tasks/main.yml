@@ -12,7 +12,7 @@
 - name: adjust mongod configuration
   template: src=mongod.conf.j2 dest=/etc/mongod.conf
   notify:
-    - reload mongodb
+    - restart mongodb
   tags:
     - mongodb
 
