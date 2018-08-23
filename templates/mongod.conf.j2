@@ -8,10 +8,15 @@ processManagement:
   fork: true
 
 net:
-  bindIp: 127.0.0.1
+  bindIp: 127.0.0.1{% if mongodb_internal_vpn_ip is defined %},{{ mongodb_internal_vpn_ip }}{% endif %}
 
 storage:
   dbPath: /var/lib/mongo
 {% if mongodb_storage_engine is defined %}
   engine: {{ mongodb_storage_engine }}
+{% endif %}
+
+{% if mongodb_replication_set_name is defined %}
+replication:
+  replSetName: {{ mongodb_replication_set_name}}
 {% endif %}
