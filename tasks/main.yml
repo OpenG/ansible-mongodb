@@ -30,7 +30,7 @@
   - mongodb
 
 - name: backup mongod.conf
-  command: cp -a /etc/mongod.conf /etc/mongod.conf.bak
+  command: cp -a /etc/mongod.conf /etc/mongod.conf.before-symlink.bak
   tags:
   - mongodb
 
@@ -38,6 +38,8 @@
   file:
     dest: /etc/mongod.conf
     state: absent
+  tags:
+  - mongodb
 
 - name: setup symbolic link to standalone mongo config
   file:
