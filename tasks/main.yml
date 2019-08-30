@@ -21,10 +21,10 @@
   tags:
   - mongodb
 
-- name: copy mongo startup with backup script
+- name: copy mongo restart with replication set script
   template:
-    src: start_mongo_with_backup.sh
-    dest: /opt/start_mongo_with_backup.sh
+    src: restart_mongo_with_repl_set.sh
+    dest: /opt/restart_mongo_with_repl_set.sh
     mode: u=rx,g=r,o=r
   tags:
   - mongodb
@@ -34,7 +34,7 @@
   tags:
   - mongodb
 
-- name: remove previous config incase of it being not a symlink
+- name: remove previous config in case of it being not a symlink
   file:
     dest: /etc/mongod.conf
     state: absent
