@@ -13,6 +13,8 @@ net:
 
 storage:
   dbPath: /var/lib/mongo
+  journal:
+    enabled: true
 {% if mongodb_storage_engine is defined %}
   engine: {{ mongodb_storage_engine }}
 {% if mongodb_cache_size_gb is defined %}

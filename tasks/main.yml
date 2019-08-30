@@ -29,11 +29,6 @@
   tags:
   - mongodb
 
-- name: backup mongod.conf
-  command: cp -a /etc/mongod.conf /etc/mongod.conf.before-symlink.bak
-  tags:
-  - mongodb
-
 - name: remove previous config in case of it being not a symlink
   file:
     dest: /etc/mongod.conf
