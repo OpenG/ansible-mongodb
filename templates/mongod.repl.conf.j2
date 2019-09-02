@@ -1,0 +1,30 @@
+systemLog:
+  path: /var/log/mongodb/mongod.log
+  logAppend: true
+  destination: file
+
+processManagement:
+  pidFilePath: /var/run/mongodb/mongod.pid
+  fork: true
+
+net:
+  bindIp: {% if mongodb_internal_vpn_ip is defined %}{{ mongodb_internal_vpn_ip }},{% endif %}127.0.0.1
+  port: 27017
+
+{% if mongodb_replication_set_name is defined %}
+replication:
+  replSetName: {{ mongodb_replication_set_name}}
+{% endif %}
+
+storage:
+  dbPath: /var/lib/mongo
+  journal:
+    enabled: true
+{% if mongodb_storage_engine is defined %}
+  engine: {{ mongodb_storage_engine }}
+{% if mongodb_cache_size_gb is defined %}
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: {{ mongodb_cache_size_gb }}
+{% endif %}
+{% endif %}

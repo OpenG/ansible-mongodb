@@ -9,12 +9,42 @@
   tags:
     - mongodb
 
-- name: adjust mongod configuration
-  template: src=mongod.conf.j2 dest=/etc/mongod.conf
-  notify:
-    - restart mongodb
+- name: copy standalone and repl configs
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+  - src: mongod.repl.conf.j2
+    dest: /opt/mongod.repl.conf
+  - src: mongod.standalone.conf.j2
+    dest: /opt/mongod.standalone.conf
   tags:
-    - mongodb
+  - mongodb
+
+- name: copy mongo restart with replication set script
+  template:
+    src: restart_mongo_with_repl_set.sh
+    dest: /opt/restart_mongo_with_repl_set.sh
+    mode: u=rx,g=r,o=r
+  tags:
+  - mongodb
+
+- name: remove previous config in case of it being not a symlink
+  file:
+    dest: /etc/mongod.conf
+    state: absent
+  tags:
+  - mongodb
+
+- name: setup symbolic link to standalone mongo config
+  file:
+    src: /opt/mongod.standalone.conf
+    dest: /etc/mongod.conf
+    state: link
+  notify:
+  - restart mongodb
+  tags:
+  - mongodb
 
 - name: setup as startup service
   service: name=mongod state=started enabled=yes
